@@ -163,7 +163,7 @@ foreach ($kategori->result_array() as $pilihktg) { ?>
                         <div class="form-group">
                             <label for="add-iconktg" class="col-form-label">Ikon : </label>
                             <input type="text" class="form-control" id="add-iconktg" required>
-                            <a href="https://fontawesome.com/v5.15/icons?d=gallery&p=2" target="_blank">
+                            <a href="https://fontawesome.com/v5.15/icons?d=gallery&p=2&q=blog&m=free" target="_blank">
                                 <div class="float-right">
                                     Cek Ikon <i class="fa fa-arrow-circle-right"></i>
                                 </div>
