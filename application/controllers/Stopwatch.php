@@ -70,6 +70,17 @@ class Stopwatch extends CI_Controller
         echo json_encode($data);
     }
 
+    public function ktgins()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $data['nama']  = $this->input->post('nama');
+        $data['icon']  = $this->input->post('ikon');
+        $data['aktif'] = 'Y';
+
+        $this->Kategori_model->insert($data);
+        echo json_encode($data);
+    }
+
     public function recupd()
     {
         // id yang telah diparsing pada ajax ajax.php data{id:id}
@@ -154,6 +165,18 @@ class Stopwatch extends CI_Controller
 
         $editdata = $this->Kategori_model->update($id, $data);
         echo json_encode($editdata);
+    }
+
+    public function cekktg()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $ktg      = $this->input->post('nama');
+        $kategori = $this->Kategori_model->getWhere('nama', $ktg)->row_array();
+        if ($kategori) {
+            echo 'N';
+        } else {
+            echo 'Y';
+        }
     }
 }
 

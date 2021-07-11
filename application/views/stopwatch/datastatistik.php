@@ -29,7 +29,7 @@ $ambildatadetik = $this->Stopwatch_model->sumWhere($ktgcard['nama'])['period'];
 <?php } ?>
 <div class="col-md-6 col-lg-3 mt-3">
     <div class="card text-dark">
-        <a id="newktg" href="javascript:void(0)">
+        <a id="newktg" href="javascript:void(0)" role="button" data-toggle="modal" data-target="#formadd">
             <div class="card-header border-success">+ Add
                 <div class="float-right">
                     <i class="fa fa-arrow-circle-right"></i>

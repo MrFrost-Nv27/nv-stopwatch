@@ -308,4 +308,78 @@ $(document).ready(function () {
 			}
 		});
 	});
+
+	$("#add-namaktg").keyup(function () {
+		var nama = $(this).val();
+		if (nama == "") {
+			$(this).removeClass("is-invalid");
+			$(this).removeClass("is-valid");
+		} else {
+			$.ajax({
+				url: BaseURL + "stopwatch/cekktg",
+				method: "post",
+				data: {
+					nama: nama,
+				},
+				success: function (data) {
+					if (data == "Y") {
+						$("#add-namaktg").addClass("is-valid");
+						$("#add-namaktg").removeClass("is-invalid");
+						$("#tomboladd").prop("disabled", false);
+					} else {
+						$("#add-namaktg").addClass("is-invalid");
+						$("#add-namaktg").removeClass("is-valid");
+						$("#tomboladd").prop("disabled", true);
+					}
+				},
+			});
+		}
+	});
+
+	$("#formaddktg").submit(function (event) {
+		event.preventDefault();
+		var nama = $("#add-namaktg").val();
+		var ikon = $("#add-iconktg").val();
+		Swal.fire({
+			title: "Tambah Kategori",
+			text: "Anda ingin menambahkan kategori ini ? Harap tinjau kembali sebelum menambahkan kategori",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Tambah",
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			cancelButtonText: "Batal",
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: BaseURL + "stopwatch/ktgins",
+					method: "post",
+					beforeSend: function () {
+						swal.fire({
+							title: "Menunggu",
+							html: "Memproses data",
+							didOpen: () => {
+								swal.showLoading();
+							},
+						});
+					},
+					data: {
+						nama: nama,
+						ikon: ikon,
+					},
+					success: function (data) {
+						swal.fire(
+							"Tambah Kategori",
+							"Kategori Berhasil Ditambahkan",
+							"success"
+						);
+						refresh();
+						$("#formadd").modal("toggle");
+					},
+				});
+			} else if (result.dismiss === swal.DismissReason.cancel) {
+				swal.fire("Batal", "Anda batal menambahkan kategori", "error");
+			}
+		});
+	});
 });

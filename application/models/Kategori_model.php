@@ -50,6 +50,11 @@ class Kategori_model extends CI_Model
         return $this->db->query("SELECT * FROM kategori WHERE aktif = 'Y'");
     }
 
+    public function insert($data)
+    {
+        return $this->db->insert('kategori', $data);
+    }
+
     public function update($id, $data)
     {
         $this->db->where('id', $id);

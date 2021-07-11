@@ -141,6 +141,43 @@ foreach ($kategori->result_array() as $pilihktg) { ?>
             </div>
         </div>
     </div>
+
+    <div class="modal fade text-dark" id="formadd" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="FormAdd" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formaddktg">
+                        <div class="form-group">
+                            <label for="add-namaktg" class="col-form-label">Nama Kategori :</label>
+                            <input type="text" class="form-control" id="add-namaktg" required>
+                            <div class="invalid-feedback">Masukkan nama kategori lain!</div>
+                            <div class="valid-feedback">Nama kategori tersedia</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add-iconktg" class="col-form-label">Ikon : </label>
+                            <input type="text" class="form-control" id="add-iconktg" required>
+                            <a href="https://fontawesome.com/v5.15/icons?d=gallery&p=2" target="_blank">
+                                <div class="float-right">
+                                    Cek Ikon <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="tomboladd">Tambah</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     </script>
