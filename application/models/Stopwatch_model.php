@@ -66,7 +66,7 @@ class Stopwatch_model extends CI_Model
     {
         $this->db->select_sum('period');
         $this->db->where('kategori', $kategori);
-        return $query = $this->db->get('stopwatch');
+        return $this->db->get('stopwatch')->row_array();
     }
 
     // ------------------------------------------------------------------------

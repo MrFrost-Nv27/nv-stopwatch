@@ -102,6 +102,59 @@ class Stopwatch extends CI_Controller
         $time   = sprintf($format, $hours, $minutes, $seconds);
         return $time;
     }
+
+    public function datastatistik()
+    {
+        $data['kategori'] = $this->Kategori_model->kategori();
+        $this->load->view('stopwatch/datastatistik', $data);
+    }
+
+    public function listktg()
+    {
+        $kategori = $this->Kategori_model->kategori();
+        $data     = "<label for='ketogori-selector'>Pilih Kategori :</label>
+                            <select class='form-control' id='ketogori-selector'>";
+        foreach ($kategori->result_array() as $pilihktg) {
+            $data .= "<option>" . $pilihktg['nama'] . "</option>";
+        }
+        $data .= "</select>";
+        echo $data;
+    }
+
+    public function listhidektg()
+    {
+        $kategori = $this->Kategori_model->getWhere('aktif', 'N')->result_array();
+        if ($kategori) {
+            $data = "<ul class='list-group'>";
+            foreach ($kategori as $hidektg) {
+                $data .= "<a href='javascript:void(0)' id='tombolunhide' data-id='" . $hidektg['id'] . "'><li class='list-group-item'><i class='fa fa-" . $hidektg['icon'] . "'></i> " . $hidektg['nama'] . "<div class='float-right'><i class='fa fa-sign-out-alt'></i></div></li></a>";
+                $data .= "</ul>";
+            }
+        } else {
+            $data = "<ul class='list-group'><li class='list-group-item list-group-item-success text-center'>Tidak ada kategori yang diarsipkan</div></li></ul>";
+        }
+        echo $data;
+    }
+
+    public function ktghide()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $id            = $this->input->post('id');
+        $data['aktif'] = "N";
+
+        $editdata = $this->Kategori_model->update($id, $data);
+        echo json_encode($editdata);
+    }
+
+    public function ktgunhide()
+    {
+        // id yang telah diparsing pada ajax ajax.php data{id:id}
+        $id            = $this->input->post('id');
+        $data['aktif'] = "Y";
+
+        $editdata = $this->Kategori_model->update($id, $data);
+        echo json_encode($editdata);
+    }
 }
 
 /* End of file Stopwatch.php */

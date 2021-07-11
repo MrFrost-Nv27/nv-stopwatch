@@ -43,7 +43,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <form>
-                        <div class="form-group">
+                        <div class="form-group" id="list-kategori">
                             <label for="ketogori-selector">Pilih Kategori :</label>
                             <select class="form-control" id="ketogori-selector">
                                 <?php
@@ -103,59 +103,12 @@ foreach ($kategori->result_array() as $pilihktg) { ?>
         <div class="row mb-5">
             <div class="col-12">
                 <div class="row" id="infografis">
-                    <?php foreach ($kategori->result_array() as $ktgcard) { ?>
-                    <div class="col-md-6 col-lg-3 mt-3">
-                        <div class="card text-dark">
-                            <div class="card-header border-warning"><?=$ktgcard['nama']; ?>
-                                <?php if ($ktgcard['id'] != 1): ?>
-                                <a id="hidektg" href="javascript:void(0)" data-idktg="<?=$ktgcard['id']; ?>">
-                                    <div class="float-right">
-                                        <i class="fa fa-eye-slash"></i>
-                                    </div>
-                                </a>
-                                <?php endif; ?>
-                            </div>
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-3">
-                                        <i class="fa fa-<?=$ktgcard['icon']; ?> fa-5x"></i>
-                                    </div>
-                                    <div class="col-9 text-right">
-                                        <?php $statistik = $this->Period_model->jumlahPeriod($ktgcard['nama']); ?>
-                                        <div class="huge"><?=$statistik['time']; ?></div>
-                                        <div><?=$statistik['prop']; ?></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php } ?>
-                    <div class="col-md-6 col-lg-3 mt-3">
-                        <div class="card text-dark">
-                            <a id="newktg" href="#">
-                                <div class="card-header border-success">+ Add
-                                    <div class="float-right">
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-3">
-                                            <i class="fa fa-plus fa-5x"></i>
-                                        </div>
-                                        <div class="col-9 text-right">
-                                            <div class="huge">New</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div class="card text-light">
-                            <a id="archived" href="javascript:void(0)">
+                            <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#staticBackdrop"
+                                id="tombolhidektglist">
                                 <div class="card-header bg-dark border-danger">Archived
                                     <div class="float-right">
                                         <i class="fa fa-folder-open"></i>
@@ -169,6 +122,25 @@ foreach ($kategori->result_array() as $pilihktg) { ?>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade text-dark" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Arsip Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="archived">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     </script>

@@ -33,21 +33,23 @@ class Period_model extends CI_Model
     {
         //
     }
-    public function jumlahPeriod($ktg)
+    public function jumlahPeriod($s, $ms = false)
     {
         $data = [];
-        $ms   = $this->Stopwatch_model->sumWhere($ktg)->row_array()['period'];
-        if ($ms < 60000) {
-            $data['time'] = $ms / 1000;
+        $ms   = $ms;
+        if ($ms = true) {
+            $s = round($s / 1000);
+        }
+        if ($s < 60) {
+            $data['time'] = $s;
             $data['prop'] = 'Detik';
-            $data['time'] = round($data['time']);
-        } elseif ($ms > 60000) {
-            if ($ms < 3600000) {
-                $data['time'] = $ms / 60000;
+        } elseif ($s > 60) {
+            if ($s < 3600) {
+                $data['time'] = $s / 60;
                 $data['prop'] = 'Menit';
                 $data['time'] = round($data['time']);
-            } elseif ($ms > 3600000) {
-                $data['time'] = $ms / 3600000;
+            } elseif ($s > 3600) {
+                $data['time'] = $s / 3600;
                 $data['prop'] = 'Jam';
                 $data['time'] = round($data['time'], 1);
             }

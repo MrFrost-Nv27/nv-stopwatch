@@ -39,15 +39,21 @@ class Kategori_model extends CI_Model
         return $this->db->get('kategori');
     }
 
-    public function getWhere($where)
+    public function getWhere($where, $value)
     {
-        $this->db->where($where);
+        $this->db->where($where, $value);
         return $this->db->get('kategori');
     }
 
     public function kategori()
     {
         return $this->db->query("SELECT * FROM kategori WHERE aktif = 'Y'");
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('kategori', $data);
     }
 
     // ------------------------------------------------------------------------

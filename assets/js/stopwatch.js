@@ -1,5 +1,6 @@
 // Convert time to a format of hours, minutes, seconds, and milliseconds
 $(document).ready(function () {
+	refresh();
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
 			confirmButton: "btn btn-success",
@@ -12,7 +13,7 @@ $(document).ready(function () {
 	$.ajax({
 		url: BaseURL + "stopwatch/datatimer",
 		success: function (data) {
-			console.log(data);
+			console.log("Happy!");
 		},
 	});
 
@@ -23,6 +24,27 @@ $(document).ready(function () {
 		stateSave: true,
 		order: [],
 	});
+
+	function refresh() {
+		$.ajax({
+			url: BaseURL + "stopwatch/listktg",
+			success: function (data) {
+				$("#list-kategori").html(data);
+			},
+		});
+		$.ajax({
+			url: BaseURL + "stopwatch/listhidektg",
+			success: function (data) {
+				$("#archived").html(data);
+			},
+		});
+		$.ajax({
+			url: BaseURL + "stopwatch/datastatistik",
+			success: function (data) {
+				$("#infografis").html(data);
+			},
+		});
+	}
 
 	function timeToString(time) {
 		let diffInHrs = time / 3600000;
@@ -103,13 +125,14 @@ $(document).ready(function () {
 							tanggalpause = dataku.start;
 							datatimer.ajax.reload(null, false);
 							dipausin = "Y";
+							refresh();
 						},
 					});
 				}
 				if (dipausin == "Y") {
 					wktins = elapsedTime;
 					$.ajax({
-						url: BaseURL + "stopwatch/recupd",
+						url: BaseURL + "stopwatch/ktghide",
 						method: "post",
 						data: {
 							tanggal: tanggalpause,
@@ -117,6 +140,7 @@ $(document).ready(function () {
 						},
 						success: function (data) {
 							datatimer.ajax.reload(null, false);
+							refresh();
 						},
 					});
 				}
@@ -152,6 +176,7 @@ $(document).ready(function () {
 							},
 							success: function (data) {
 								datatimer.ajax.reload(null, false);
+								refresh();
 							},
 						});
 					}
@@ -166,6 +191,7 @@ $(document).ready(function () {
 							},
 							success: function (data) {
 								datatimer.ajax.reload(null, false);
+								refresh();
 							},
 						});
 					}
@@ -229,6 +255,7 @@ $(document).ready(function () {
 					success: function (data) {
 						swal.fire("Hapus", "Berhasil Terhapus", "success");
 						datatimer.ajax.reload(null, false);
+						refresh();
 					},
 				});
 			} else if (result.dismiss === swal.DismissReason.cancel) {
@@ -237,7 +264,48 @@ $(document).ready(function () {
 		});
 	});
 
-	$("#newktg").click(function (e) {
-		return false;
+	$("#tombolhidektglist").click(function (e) {
+		refresh();
+	});
+
+	$("#archived").on("click", "#tombolunhide", function () {
+		var id = $(this).data("id");
+		Swal.fire({
+			title: "Perlihatkan Kategori",
+			text: "Anda ingin memperlihatkan kategori ini ? Harap tinjau kembali sebelum memperlihatkan kategori",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Perlihatkan",
+			confirmButtonColor: "#d33",
+			cancelButtonColor: "#3085d6",
+			cancelButtonText: "Batal",
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: BaseURL + "stopwatch/ktgunhide",
+					method: "post",
+					beforeSend: function () {
+						swal.fire({
+							title: "Menunggu",
+							html: "Memproses data",
+							didOpen: () => {
+								swal.showLoading();
+							},
+						});
+					},
+					data: {
+						id: id,
+					},
+					success: function (data) {
+						swal.fire("Perlihatkan", "Berhasil Diperlihatkan", "success");
+						datatimer.ajax.reload(null, false);
+						refresh();
+						$(this).hide();
+					},
+				});
+			} else if (result.dismiss === swal.DismissReason.cancel) {
+				swal.fire("Batal", "Anda membatalkan memperlihatkan kategori", "error");
+			}
+		});
 	});
 });
