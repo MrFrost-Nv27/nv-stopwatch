@@ -3,7 +3,7 @@
     <div class="card text-dark">
         <div class="card-header border-warning"><?=$ktgcard['nama']; ?>
             <?php if ($ktgcard['id'] != 1): ?>
-            <a id="hidektg" href="javascript:void(0)" data-idktg="<?=$ktgcard['id']; ?>">
+            <a class="hidektg" href="javascript:void(0)" data-idktg="<?=$ktgcard['id']; ?>">
                 <div class="float-right">
                     <i class="fa fa-eye-slash"></i>
                 </div>
@@ -67,7 +67,7 @@ function listktg() {
     });
 }
 
-$("#hidektg").click(function(e) {
+$(".hidektg").click(function(e) {
     var id = $(this).data("idktg");
     Swal.fire({
         title: "Sembunyikan Kategori",
