@@ -36,6 +36,7 @@ class Stopwatch_model extends CI_Model
 
     public function all()
     {
+        $this->db->order_by('start', 'DESC');
         return $this->db->get('stopwatch');
     }
 
