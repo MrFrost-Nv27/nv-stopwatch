@@ -194,6 +194,7 @@ foreach ($kategori->result_array() as $pilihktg) { ?>
     <script>
     var BaseURL = "<?=base_url() ?>";
     </script>
+    <script src="<?=base_url('assets/'); ?>js/data.js"></script>
     <script src="<?=base_url('assets/'); ?>js/stopwatch.js"></script>
     <script src="https://kit.fontawesome.com/3c5643e4eb.js" crossorigin="anonymous"></script>
 
