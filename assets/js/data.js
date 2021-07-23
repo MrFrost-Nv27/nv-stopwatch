@@ -1,5 +1,8 @@
+refresh();
 const STORAGE_KEY = "NV_STOPWATCH";
+const STORAGE_KEY2 = "NV_STOPWATCH_KTG";
 let startTime = 0;
+let ctgSelected = "";
 
 // Declare variables to use in our functions below
 let elapsedTime = 0;
@@ -13,6 +16,7 @@ let playButton = document.getElementById("playButton");
 let pauseButton = document.getElementById("pauseButton");
 let resetButton = document.getElementById("resetButton");
 
+$("#ketogori-selector").prop("disabled", false);
 var datatimer = $("#time_record").DataTable({
 	processing: true,
 	responsive: true,
@@ -51,16 +55,20 @@ function isStorageExist() {
 
 function saveData() {
 	localStorage.setItem(STORAGE_KEY, startTime);
+	localStorage.setItem(STORAGE_KEY2, ctgSelected);
 	document.dispatchEvent(new Event("ondatasaved"));
 }
 
 function loadDataFromStorage() {
 	const serializedData = localStorage.getItem(STORAGE_KEY);
+	const serializedData2 = localStorage.getItem(STORAGE_KEY2);
 
 	let data = parseInt(serializedData);
+	let data2 = serializedData2;
 
 	if (data) {
 		startTime = data;
+		ctgSelected = data2;
 		document.dispatchEvent(new Event("ondataloaded"));
 	}
 }
@@ -104,6 +112,7 @@ function start() {
 		print(timeToString(elapsedTime));
 	}, 10);
 	showButton("PAUSE");
+	ctgSelected = $("#ketogori-selector").val();
 	$("#ketogori-selector").prop("disabled", true);
 	updateDataToStorage();
 }
@@ -218,6 +227,7 @@ function reset() {
 				$("#ketogori-selector").prop("disabled", false);
 				dipausin = "N";
 				localStorage.removeItem(STORAGE_KEY);
+				localStorage.removeItem(STORAGE_KEY2);
 			}
 		});
 	}
@@ -243,5 +253,4 @@ function refreshDataFromWaktu() {
 		print(timeToString(elapsedTime));
 	}, 10);
 	showButton("PAUSE");
-	$("#ketogori-selector").prop("disabled", true);
 }

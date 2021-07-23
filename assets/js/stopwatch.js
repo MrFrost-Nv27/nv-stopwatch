@@ -1,6 +1,5 @@
 // Convert time to a format of hours, minutes, seconds, and milliseconds
 $(document).ready(function () {
-	refresh();
 	if (isStorageExist()) {
 		loadDataFromStorage();
 	}
@@ -12,7 +11,6 @@ $(document).ready(function () {
 		},
 		buttonsStyling: false,
 	});
-	$("#ketogori-selector").prop("disabled", false);
 
 	$.ajax({
 		url: BaseURL + "stopwatch/datatimer",

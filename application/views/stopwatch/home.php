@@ -45,7 +45,7 @@
                     <form>
                         <div class="form-group" id="list-kategori">
                             <label for="ketogori-selector">Pilih Kategori :</label>
-                            <select class="form-control" id="ketogori-selector">
+                            <select class="form-control" id="ketogori-selector" name="kategori-selector">
                                 <?php
 foreach ($kategori->result_array() as $pilihktg) { ?>
                                 <option><?=$pilihktg['nama']; ?></option>
